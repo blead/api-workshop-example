@@ -2,7 +2,8 @@
 const MOCK_DATA = {
   Students: [
     {id: 1234567890, name: 'John Doe', gender: 'male', isWearingGlasses: true, telephone: '1234567890', birthdate: null},
-    {id: 5678901234, name: 'Jane Doe', gender: 'female', isWearingGlasses: false, telephone: '5678901234', birthdate: null}
+    {id: 5678901234, name: 'Jane Doe', gender: 'female', isWearingGlasses: false, telephone: '5678901234', birthdate: null},
+    {id: 3456789012, name: 'Nomen Nescio', gender: 'unknown', isWearingGlasses: true, telephone: '7878787878', birthdate: null}
   ],
   Courses: [
     {id: 0, name: 'Alpha', credit: 1},
@@ -18,7 +19,11 @@ const MOCK_DATA = {
     {studentId: 5678901234, courseId: 0, score: 60},
     {studentId: 5678901234, courseId: 1, score: 72},
     {studentId: 5678901234, courseId: 2, score: 95},
-    {studentId: 5678901234, courseId: 3, score: 21}
+    {studentId: 5678901234, courseId: 3, score: 21},
+    {studentId: 3456789012, courseId: 0, score: 78},
+    {studentId: 3456789012, courseId: 1, score: 87},
+    {studentId: 3456789012, courseId: 2, score: 77},
+    {studentId: 3456789012, courseId: 3, score: 88}
   ]
 };
 
@@ -31,7 +36,7 @@ var margin = MARGIN,
     height = HEIGHT,
     calculatedWidth = width - margin.left - margin.right,
     calculatedHeight = height - margin.top - margin.bottom;
-var x = d3.scale.ordinal().range([0, calculatedWidth]),
+var x = d3.scale.ordinal().rangePoints([0, calculatedWidth]),
     y = d3.scale.linear().range([calculatedHeight, 0]),
     color = d3.scale.category20(),
     xAxis = d3.svg.axis().scale(x).orient('bottom'),
@@ -83,7 +88,7 @@ function join(students,courses,scores) {
  * reducerX, reducerY, colorReducer: reducer function for each axis and plot colors
 */
 function draw(data,labelX,labelY,reducerX,reducerY,colorReducer) {
-  x.domain(data.map(reducerX).sort());
+  x.domain(data.map(reducerX).filter( (element, index, array) => index === array.indexOf(element) ).sort());
   y.domain(d3.extent(data,reducerY)).nice();
 
   svg.append('g')

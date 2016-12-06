@@ -46,7 +46,7 @@ var x = d3.scale.ordinal().rangePoints([0, calculatedWidth]),
 
 /* main */
 // TODO: replace mockRequest() with request() 
-$.when( mockRequest('GET','Students',null), mockRequest('GET','Courses',null), mockRequest('GET','Scores',null) ).done( (students, courses, scores) => {
+$.when( mockRequest('GET','Students'), mockRequest('GET','Courses'), mockRequest('GET','Scores') ).done( (students, courses, scores) => {
   draw(join(students[0],courses[0],scores[0]),'first digit of telephone number','score', d => d.student.telephone.substr(0,1) , d => d.score , d => d.course.name);
   // draw(join(students[0],courses[0],scores[0]),'last digit of telephone number','score', d => d.student.telephone.substr(-1,1) , d => d.score , d => d.course.name);
   // draw(join(students[0],courses[0],scores[0]),'first character of name','score', d => d.student.name.substr(0,1) , d => d.score , d => d.course.name);

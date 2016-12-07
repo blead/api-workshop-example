@@ -1,17 +1,17 @@
 /* variables */
 const MOCK_DATA = {
-  Students: [
+  students: [
     {student_id: 1234567890, name: 'John Doe', gender: 'male', is_wearing_glasses: true, telephone: '1234567890', birthdate: null},
     {student_id: 5678901234, name: 'Jane Doe', gender: 'female', is_wearing_glasses: false, telephone: '5678901234', birthdate: null},
     {student_id: 3456789012, name: 'Nomen Nescio', gender: 'unknown', is_wearing_glasses: true, telephone: '7878787878', birthdate: null}
   ],
-  Courses: [
+  courses: [
     {course_id: 0, name: 'Alpha', credit: 1},
     {course_id: 1, name: 'Beta', credit: 2},
     {course_id: 2, name: 'Gamma', credit: 2},
     {course_id: 3, name: 'Delta', credit: 1}
   ],
-  Scores: [
+  scores: [
     {student_id: 1234567890, course_id: 0, score: 42},
     {student_id: 1234567890, course_id: 1, score: 50},
     {student_id: 1234567890, course_id: 2, score: 14},
@@ -29,7 +29,8 @@ const MOCK_DATA = {
 
 const MARGIN = {top: 50, right: 50, bottom: 50, left: 50},
       WIDTH = 960,
-      HEIGHT = 500;
+      HEIGHT = 500,
+      URL = '';
 
 var margin = MARGIN,
     width = WIDTH,
@@ -46,7 +47,7 @@ var x = d3.scale.ordinal().rangePoints([0, calculatedWidth]),
 
 /* main */
 // TODO: replace mockRequest() with request() 
-$.when( mockRequest('GET','Students'), mockRequest('GET','Courses'), mockRequest('GET','Scores') ).done( (students, courses, scores) => {
+$.when( request('GET',URL + 'students'), request('GET',URL + 'courses'), request('GET',URL + 'scores') ).done( (students, courses, scores) => {
   draw(join(students[0],courses[0],scores[0]),'first digit of telephone number','score', d => d.student.telephone.substr(0,1) , d => d.score , d => d.course.name);
   // draw(join(students[0],courses[0],scores[0]),'last digit of telephone number','score', d => d.student.telephone.substr(-1,1) , d => d.score , d => d.course.name);
   // draw(join(students[0],courses[0],scores[0]),'first character of name','score', d => d.student.name.substr(0,1) , d => d.score , d => d.course.name);
@@ -78,8 +79,11 @@ function join(students,courses,scores) {
     coursesIndex[course.course_id] = course;
   });
   return $.map(scores, (score) => {
-    return {student: studentsIndex[score.student_id], course: coursesIndex[score.course_id], score: score.score}
-  });
+    var data = {student: studentsIndex[score.student_id], course: coursesIndex[score.course_id], score: score.score};
+    if(data.student !== undefined && data.course !== undefined && score !== undefined)
+      return data;
+    return undefined; 
+  }).filter( d => d );
 }
 
 /* 

@@ -52,3 +52,11 @@ each table can be accessed via HTTP GET/POST requests:
 /courses
 /scores
 ```
+
+### additional `GET` parameters
+
+#### `/students`
+filter response based on `id` or `name` e.g.:
+- `/students?id=1` returns the student entry with `id` = `1`
+- `/students?name=name` returns the student entry with `name` = `name`
+- `/students?id=1&name=name` returns the student entry with `id` = `1` and `name` = `name`

@@ -1,29 +1,29 @@
 /* variables */
 const MOCK_DATA = {
   Students: [
-    {id: 1234567890, name: 'John Doe', gender: 'male', isWearingGlasses: true, telephone: '1234567890', birthdate: null},
-    {id: 5678901234, name: 'Jane Doe', gender: 'female', isWearingGlasses: false, telephone: '5678901234', birthdate: null},
-    {id: 3456789012, name: 'Nomen Nescio', gender: 'unknown', isWearingGlasses: true, telephone: '7878787878', birthdate: null}
+    {student_id: 1234567890, name: 'John Doe', gender: 'male', is_wearing_glasses: true, telephone: '1234567890', birthdate: null},
+    {student_id: 5678901234, name: 'Jane Doe', gender: 'female', is_wearing_glasses: false, telephone: '5678901234', birthdate: null},
+    {student_id: 3456789012, name: 'Nomen Nescio', gender: 'unknown', is_wearing_glasses: true, telephone: '7878787878', birthdate: null}
   ],
   Courses: [
-    {id: 0, name: 'Alpha', credit: 1},
-    {id: 1, name: 'Beta', credit: 2},
-    {id: 2, name: 'Gamma', credit: 2},
-    {id: 3, name: 'Delta', credit: 1}
+    {course_id: 0, name: 'Alpha', credit: 1},
+    {course_id: 1, name: 'Beta', credit: 2},
+    {course_id: 2, name: 'Gamma', credit: 2},
+    {course_id: 3, name: 'Delta', credit: 1}
   ],
   Scores: [
-    {studentId: 1234567890, courseId: 0, score: 42},
-    {studentId: 1234567890, courseId: 1, score: 50},
-    {studentId: 1234567890, courseId: 2, score: 14},
-    {studentId: 1234567890, courseId: 3, score: 80},
-    {studentId: 5678901234, courseId: 0, score: 60},
-    {studentId: 5678901234, courseId: 1, score: 72},
-    {studentId: 5678901234, courseId: 2, score: 95},
-    {studentId: 5678901234, courseId: 3, score: 21},
-    {studentId: 3456789012, courseId: 0, score: 78},
-    {studentId: 3456789012, courseId: 1, score: 87},
-    {studentId: 3456789012, courseId: 2, score: 77},
-    {studentId: 3456789012, courseId: 3, score: 88}
+    {student_id: 1234567890, course_id: 0, score: 42},
+    {student_id: 1234567890, course_id: 1, score: 50},
+    {student_id: 1234567890, course_id: 2, score: 14},
+    {student_id: 1234567890, course_id: 3, score: 80},
+    {student_id: 5678901234, course_id: 0, score: 60},
+    {student_id: 5678901234, course_id: 1, score: 72},
+    {student_id: 5678901234, course_id: 2, score: 95},
+    {student_id: 5678901234, course_id: 3, score: 21},
+    {student_id: 3456789012, course_id: 0, score: 78},
+    {student_id: 3456789012, course_id: 1, score: 87},
+    {student_id: 3456789012, course_id: 2, score: 77},
+    {student_id: 3456789012, course_id: 3, score: 88}
   ]
 };
 
@@ -72,13 +72,13 @@ function join(students,courses,scores) {
   var studentsIndex = {},
       coursesIndex = {};
   $.each(students, (index,student) => {
-    studentsIndex[student.id] = student;
+    studentsIndex[student.student_id] = student;
   });
   $.each(courses, (index,course) => {
-    coursesIndex[course.id] = course;
+    coursesIndex[course.course_id] = course;
   });
   return $.map(scores, (score) => {
-    return {student: studentsIndex[score.studentId], course: coursesIndex[score.courseId], score: score.score}
+    return {student: studentsIndex[score.student_id], course: coursesIndex[score.course_id], score: score.score}
   });
 }
 
